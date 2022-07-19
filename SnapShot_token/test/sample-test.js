@@ -1,6 +1,5 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
-const { isCallTrace } = require("hardhat/internal/hardhat-network/stack-traces/message-trace");
 
 describe("Snapshot Token contract Deployment", function () {
   let Token;
@@ -36,5 +35,23 @@ describe("Snapshot Token contract Deployment", function () {
       expect(await SnapShotToken.balanceOf(addr1.address)).to.equal(50)
     })
 
+    it("Should fail if sender does not have enough tokens", async function(){
+      await expect(SnapShotToken.connect(addr1).transfer(addr2.address, 70)).to.be.revertedWith("ERC20: transfer amount exceeds balance")
+    })
+  })
+
+  describe("Snapshot Functions", async () => {
+    it("Should show the balance of an address at a particular snapshot", async () => {
+      await SnapShotToken.transfer(addr1.address, 50)
+      await SnapShotToken.snapshot()
+      expect(await SnapShotToken.balanceOfAt(addr1.address, 1)).to.equal(50)
+    })
+
+    it("Should check the total supply of tokens at a particular snapshot", async() => {
+      await SnapShotToken.snapshot()
+      await SnapShotToken.mint(addr1.address, 100000000000000000000n)
+      await SnapShotToken.snapshot()
+      expect(await SnapShotToken.totalSupplyAt(2)).to.equal(10100000000000000000000n) 
+    })
   })
 });
