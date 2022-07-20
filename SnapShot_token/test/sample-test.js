@@ -11,7 +11,7 @@ describe("Snapshot Token contract Deployment", function () {
 
   beforeEach(async function() {
     Token = await ethers.getContractFactory("MyToken");
-    [owner, addr1, addr2, ...addrs] = await ethers.getSigners() // ethers.getSigners() returns an array with 20 signers (these are fake ones)
+    [owner, addr1, addr2, ...addrs] = await ethers.getSigners() 
     SnapShotToken = await Token.deploy()
   })
 
