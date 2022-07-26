@@ -18,6 +18,14 @@ contract MyToken is ERC20, Pausable, Ownable {
         _unpause();
     }
 
+    function mint(address account, uint256 amount) public onlyOwner {
+        super._mint(account, amount);
+    }
+
+    function burn(address account, uint256 amount) public onlyOwner {
+        _burn(account, amount);
+    }
+
     function _beforeTokenTransfer(address from, address to, uint256 amount)
         internal
         whenNotPaused

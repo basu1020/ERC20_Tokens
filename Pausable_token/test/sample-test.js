@@ -48,6 +48,8 @@ describe("Pausable Token contract Deployment", function () {
     it("Should fail transaction, minting and burning of tokens if contract is paused", async () => {
       await PausableToken.pause()
       await expect(PausableToken.transfer(addr2.address, 70)).to.be.revertedWith("Pausable: paused")
+      await expect(PausableToken.mint(addr1.address, 50)).to.be.revertedWith("Pausable: paused")
+      await expect(PausableToken.burn(addr1.address, 20)).to.be.revertedWith("Pausable: paused")
     })
 
     it("It should fail the unpause function when contract is not paused", async function(){
