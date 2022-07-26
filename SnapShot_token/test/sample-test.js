@@ -16,7 +16,7 @@ describe("Snapshot Token contract Deployment", function () {
   })
 
   describe("Deployment", async function() {
-    it("Should set the right", async() => {
+    it("Should set the right owner", async() => {
       expect(await SnapShotToken.owner()).to.equal(owner.address);
     })
 
@@ -38,6 +38,11 @@ describe("Snapshot Token contract Deployment", function () {
     it("Should fail if sender does not have enough tokens", async function(){
       await expect(SnapShotToken.connect(addr1).transfer(addr2.address, 70)).to.be.revertedWith("ERC20: transfer amount exceeds balance")
     })
+
+    it("Should be able to execute minting and burning process", async () => {
+      await SnapShotToken.burn()
+      await expect()
+    })
   })
 
   describe("Snapshot Functions", async () => {
@@ -54,4 +59,5 @@ describe("Snapshot Token contract Deployment", function () {
       expect(await SnapShotToken.totalSupplyAt(2)).to.equal(10100000000000000000000n) 
     })
   })
+
 });
