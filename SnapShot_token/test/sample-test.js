@@ -53,5 +53,4 @@ describe("Snapshot Token contract Deployment", function () {
       expect(await SnapShotToken.totalSupplyAt(2)).to.equal(10100000000000000000000n) 
     })
   })
-  
 });
